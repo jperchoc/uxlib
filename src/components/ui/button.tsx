@@ -9,26 +9,36 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        primary: "bg-primary text-white hover:bg-primary-700 focus-visible:ring-primary",
+        critical: "bg-critical text-white hover:bg-critical-700 focus-visible:ring-info",
+        neutral: "bg-neutral text-white hover:bg-neutral-700 focus-visible:ring-neutral",
+      },
+      mode: {
+        default: "",
+        outline: "bg-transparent border",
+        ghost: "bg-transparent",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        md: "px-4 py-2 text-base",
+        sm: "px-3 py-1 text-sm",
+        xs: "px-2 py-0.5 text-xs",
       },
     },
+    compoundVariants: [
+      // Outline mode for each variant
+      { variant: "primary", mode: "outline", className: "border-primary text-primary hover:bg-primary-100 hover:text-primary-700 active:bg-primary-200 active:text-primary-800" },
+      { variant: "critical", mode: "outline", className: "border-critical text-critical hover:bg-critical-100 hover:text-critical-700 active:bg-critical-200 active:text-critical-800" },
+      { variant: "neutral", mode: "outline", className: "border-neutral text-neutral hover:bg-neutral-100 hover:text-neutral-700 active:bg-neutral-200 active:text-neutral-800" },
+
+      // Ghost mode for each variant
+      { variant: "primary", mode: "ghost", className: "text-primary hover:bg-primary-100 hover:text-primary-700 active:bg-primary-200 active:text-primary-800" },
+      { variant: "critical", mode: "ghost", className: "text-critical hover:bg-critical-100 hover:text-critical-700 active:bg-critical-200 active:text-critical-800" },
+      { variant: "neutral", mode: "ghost", className: "text-neutral hover:bg-neutral-100 hover:text-neutral-700 active:bg-neutral-200 active:text-neutral-800" },
+    ],
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "primary",
+      mode: "default",
+      size: "md",
     },
   }
 )
@@ -40,11 +50,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, mode,  asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, mode, className }))}
         ref={ref}
         {...props}
       />

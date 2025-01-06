@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from "@storybook/react";
-import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription, SheetHeader, SheetFooter } from "../ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription, SheetHeader, SheetFooter, SheetClose } from "../ui/sheet";
+import { Button } from '../ui/button';
 
 export default {
   title: "Components/Sheet",
@@ -18,7 +19,7 @@ const Template: StoryFn = (args) => (
   <div className="space-y-4">
     <Sheet>
       <SheetTrigger asChild>
-        <button className="px-4 py-2 text-white bg-blue-500 rounded">Open Sheet</button>
+        <Button>Open Sheet</Button>
       </SheetTrigger>
       <SheetContent {...args}>
         <SheetHeader>
@@ -26,7 +27,9 @@ const Template: StoryFn = (args) => (
           <SheetDescription>This is a description inside the sheet.</SheetDescription>
         </SheetHeader>
         <SheetFooter>
-          <button className="px-4 py-2 text-white bg-gray-500 rounded">Close</button>
+          <SheetClose asChild>
+          <Button>Close</Button>
+          </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -13,6 +13,7 @@ import {
   ContextMenuGroup,
   ContextMenuRadioGroup,
 } from "../ui/context-menu";
+import { Button } from '../ui/button';
 
 export default {
   title: "Components/ContextMenu",
@@ -22,7 +23,7 @@ export default {
 const Template: StoryFn = () => (
   <ContextMenu>
     <ContextMenuTrigger>
-      <button className="px-4 py-2 bg-gray-200 rounded">Right-click me</button>
+      <Button>Right-click me</Button>
     </ContextMenuTrigger>
     <ContextMenuContent>
       <ContextMenuLabel>Actions</ContextMenuLabel>

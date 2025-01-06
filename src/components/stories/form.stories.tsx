@@ -11,6 +11,7 @@ import {
 } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input"; // Example Input component
+import { Button } from 'react-day-picker';
 
 export default {
   title: "Components/Form",
@@ -46,12 +47,12 @@ const Template: StoryFn = () => {
             </FormItem>
           )}
         />
-        <button
+        <Button
           type="submit"
           className="px-4 py-2 bg-primary text-white rounded"
         >
           Submit
-        </button>
+        </Button>
       </form>
     </Form>
   );

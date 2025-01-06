@@ -8,7 +8,9 @@ import {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
+  DrawerClose,
 } from "../ui/drawer";
+import { Button } from '../ui/button';
 
 export default {
   title: "Components/Drawer",
@@ -29,10 +31,14 @@ const Template: StoryFn = (args) => (
       </DrawerHeader>
       <div className="px-4 py-2">Drawer body content goes here.</div>
       <DrawerFooter>
-        <button className="px-4 py-2 bg-gray-200 rounded">Cancel</button>
-        <button className="px-4 py-2 bg-primary text-white rounded">
+        <DrawerClose asChild>
+          <Button variant="neutral" mode="ghost">Cancel</Button>
+        </DrawerClose>
+        <DrawerClose asChild>
+        <Button variant="primary" >
           Confirm
-        </button>
+        </Button>
+        </DrawerClose>
       </DrawerFooter>
     </DrawerContent>
   </Drawer>

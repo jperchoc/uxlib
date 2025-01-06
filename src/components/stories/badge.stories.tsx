@@ -8,9 +8,14 @@ export default {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "secondary", "destructive", "outline"],
+      options: ["neutral", "information", "success", "warning", "critical", "alpha", "beta", "new", "promotion"],
       description: "The variant style of the badge.",
     },
+    size: {
+        control: "select",
+        options: ["sm", "md", "lg"],
+        description: "The size of the badge.",
+      },
     children: {
       control: "text",
       description: "Content inside the badge.",
@@ -26,24 +31,7 @@ const Template: StoryFn<BadgeProps> = (args) => <Badge {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: "default",
+  variant: "neutral",
+  size: "md",
   children: "Default Badge",
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
-  variant: "secondary",
-  children: "Secondary Badge",
-};
-
-export const Destructive = Template.bind({});
-Destructive.args = {
-  variant: "destructive",
-  children: "Destructive Badge",
-};
-
-export const Outline = Template.bind({});
-Outline.args = {
-  variant: "outline",
-  children: "Outline Badge",
 };
