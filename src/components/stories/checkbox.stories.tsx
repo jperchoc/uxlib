@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from "@storybook/react";
 import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
 
 export default {
   title: "Components/Checkbox",
@@ -18,11 +19,11 @@ export default {
 } as Meta;
 
 const Template: StoryFn = (args) => (
-  <div className="flex flex-col gap-4">
-    <Checkbox {...args} />
-    <label htmlFor="checkbox" className="text-sm">
+  <div className="flex items-center space-x-2">
+    <Checkbox id="checkbox" {...args} />
+    <Label htmlFor="checkbox">
       I agree to the terms and conditions.
-    </label>
+    </Label>
   </div>
 );
 

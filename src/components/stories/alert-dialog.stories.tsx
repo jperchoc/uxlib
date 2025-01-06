@@ -11,6 +11,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from "../ui/alert-dialog";
+import { Button } from '../ui/button';
 
 export default {
   title: "Components/AlertDialog",
@@ -22,7 +23,7 @@ export default {
 
 const Template: StoryFn = (args) => (
   <AlertDialog {...args}>
-    <AlertDialogTrigger className="btn btn-primary">Open Alert</AlertDialogTrigger>
+    <AlertDialogTrigger asChild><Button mode={'ghost'}>Open Alert</Button></AlertDialogTrigger>
     <AlertDialogContent>
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
