@@ -14,7 +14,7 @@ const Template: StoryFn = (args) => (
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
       <YAxis />
-      <Line type="monotone" dataKey="value" stroke="#8884d8" />
+      <Line type="monotone" dataKey="value" />
       <ChartTooltip />
       <ChartLegend />
     </LineChart>
@@ -30,6 +30,6 @@ Default.args = {
     { name: "Page D", value: 100 },
   ],
   config: {
-    value: { label: "Value", color: "#8884d8" },
+    value: { label: "Value" },
   },
 };
