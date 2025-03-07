@@ -78,4 +78,10 @@
   .dark body {
     @apply text-white;
   }
+
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border) !important;
+  }
 }
