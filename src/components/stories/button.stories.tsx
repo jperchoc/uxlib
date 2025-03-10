@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Button, ButtonProps } from "../ui/button"; // Adjust the path as needed
 // import { TrashIcon } from "lucide-react";
@@ -9,15 +9,15 @@ export default {
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "critical", "neutral"],
+      options: ["primary", "critical", "neutral", "menu"],
     },
     mode: {
       control: "select",
-      options: ["default", "outline", "ghost"],
+      options: ["default", "outline", "ghost", "menu"],
     },
     size: {
       control: "select",
-      options: ["xs", "sm", "md"],
+      options: ["xs", "sm", "md", "menu"],
     },
     disabled: { control: "boolean" },
     children: { control: "text" },
@@ -31,5 +31,5 @@ Default.args = {
   variant: "primary",
   mode: "default",
   size: "md",
-  children: "Default Button",
+  children: "Button",
 };
