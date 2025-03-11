@@ -80,7 +80,7 @@ const dropdownMenuItemVariant = cva(
       variant: {
         default: "focus:bg-accent focus:text-accent-foreground",
         primary: "text-primary-500 focus:text-primary-500 focus:bg-primary-100 font-semibold",
-        destructive:
+        critical:
           "text-red-500 focus:text-red-500 focus:bg-red-100 font-semibold",
       },
     },
@@ -215,4 +215,5 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
+  dropdownMenuItemVariant,
 }
