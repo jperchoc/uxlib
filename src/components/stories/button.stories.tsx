@@ -10,7 +10,7 @@ export default {
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "critical", "neutral", "menu"],
+      options: ["primary", "destructive", "neutral", "menu"],
     },
     mode: {
       control: "select",

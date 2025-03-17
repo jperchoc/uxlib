@@ -7,7 +7,7 @@ export default {
   component: Toggle,
   argTypes: {
     variant: {
-      control: { type: "select", options: ["default", "outline"] },
+      control: { type: "select", options: ["neutral", "outline"] },
     },
     size: {
       control: { type: "select", options: ["default", "sm", "lg"] },
@@ -19,7 +19,7 @@ const Template: StoryFn = (args) => <Toggle {...args}>Toggle</Toggle>;
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: "default",
+  variant: "neutral",
   size: "default",
 };
 
@@ -31,12 +31,12 @@ Outline.args = {
 
 export const Small = Template.bind({});
 Small.args = {
-  variant: "default",
+  variant: "neutral",
   size: "sm",
 };
 
 export const Large = Template.bind({});
 Large.args = {
-  variant: "default",
+  variant: "neutral",
   size: "lg",
 };

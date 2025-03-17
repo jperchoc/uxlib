@@ -78,14 +78,14 @@ const dropdownMenuItemVariant = cva(
   {
     variants: {
       variant: {
-        default: "focus:bg-accent focus:text-accent-foreground",
+        neutral: "focus:bg-accent focus:text-accent-foreground",
         primary: "text-primary-500 focus:text-primary-500 focus:bg-primary-100 font-semibold",
-        critical:
+        destructive:
           "text-red-500 focus:text-red-500 focus:bg-red-100 font-semibold",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
     },
   }
 )

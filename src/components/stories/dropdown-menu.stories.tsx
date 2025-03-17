@@ -20,7 +20,7 @@ export default {
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "critical", "default"],
+      options: ["neutral", "destructive", "primary"],
     },
   },
 } as Meta<DropdownMenuItemProps>;
@@ -51,5 +51,5 @@ const Template: StoryFn<DropdownMenuItemProps> = (args) => (
 
 export const Default = Template.bind({});
 Default.args={
-  variant: "default"
+  variant: "primary"
 }

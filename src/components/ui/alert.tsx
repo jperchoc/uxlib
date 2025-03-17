@@ -8,7 +8,7 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default:
+        primary:
           "border-transparent bg-blue-100 text-blue-700 [&>svg]:text-blue-700",
         neutral: 
           "bg-background text-foreground",
@@ -21,7 +21,7 @@ const alertVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
     },
   }
 )
