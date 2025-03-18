@@ -16,8 +16,8 @@ const buttonVariants = cva(
       },
       mode: {
         default: "",
-        outline: "bg-transparent border",
-        ghost: "bg-transparent",
+        outline: "bg-background border",
+        ghost: "bg-background",
         menu: "bg-background",
       },
       size: {
