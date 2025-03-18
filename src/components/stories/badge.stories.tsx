@@ -8,7 +8,7 @@ export default {
   argTypes: {
     variant: {
       control: "select",
-      options: ["neutral", "information", "success", "warning", "critical", "alpha", "beta", "new", "promotion"],
+      options: ["neutral", "primary", "success", "warning", "destructive", "alpha", "beta", "new", "promotion"],
       description: "The variant style of the badge.",
     },
     size: {
