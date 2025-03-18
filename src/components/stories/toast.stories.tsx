@@ -9,7 +9,7 @@ export default {
     variant: {
       control: {
         type: "select",
-        options: ["default", "destructive"],
+        options: ["neutral", "destructive"],
       },
     },
     children: { control: "text" },
@@ -31,7 +31,7 @@ const Template: StoryFn = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: "default",
+  variant: "neutral",
   title: "Default Toast",
   description: "This is a default toast notification.",
 };
@@ -45,7 +45,7 @@ Destructive.args = {
 
 export const WithAction = Template.bind({});
 WithAction.args = {
-  variant: "default",
+  variant: "neutral",
   title: "Actionable Toast",
   description: "This toast has an action button.",
 };

@@ -9,7 +9,7 @@ const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants>
 >({
   size: "default",
-  variant: "default",
+  variant: "neutral",
 })
 
 const ToggleGroup = React.forwardRef<
