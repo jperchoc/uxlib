@@ -8,7 +8,7 @@ export default {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "destructive"],
+      options: ["primary", "destructive", "success", "warning","neutral"],
     },
   },
 } as Meta;
@@ -28,10 +28,26 @@ const Template: StoryFn = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: "default",
+  variant: "primary",
 };
+
+export const Neutral = Template.bind({});
+Neutral.args = {
+  variant: "neutral",
+};
+
 
 export const Destructive = Template.bind({});
 Destructive.args = {
   variant: "destructive",
+};
+
+export const Success = Template.bind({});
+Success.args = {
+  variant: "success",
+};
+
+export const Warning = Template.bind({});
+Warning.args = {
+  variant: "warning",
 };
