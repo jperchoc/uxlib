@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   MultiSelect,
@@ -75,7 +75,7 @@ const Template: StoryFn = (args) => {
                   {opt.label}
                 </MultiSelectItem>
               ))}
-                <MultiSelectItem key={'disabled'} value={'disabled'} disabled>
+                <MultiSelectItem key={'disabled'} value={'disabled'} className="test" disabled>
                 {'disabled'}
                 </MultiSelectItem>
               </MultiSelectGroup>
@@ -83,9 +83,9 @@ const Template: StoryFn = (args) => {
         </MultiSelectOptions>
         <div className="flex items-center justify-between">
           { selectedValues.length > 0 && (
-            <MultiSelectClear>{args.labelClear || "Clear"}</MultiSelectClear>
+            <MultiSelectClear>{args.labelClear as ReactNode || "Clear"}</MultiSelectClear>
           )}
-          <MultiSelectClose>{args.labelClose || "Close"}</MultiSelectClose>
+          <MultiSelectClose>{args.labelClose as ReactNode || "Close"}</MultiSelectClose>
         </div>
       </MultiSelectContent>
     </MultiSelect>
@@ -140,5 +140,79 @@ CustomLabels.args = {
   labelClear: "Remove all",
   labelClose: "Done",
   maxCount: 2,
+  defaultValue: ["settings", "logout"],
+};
+
+const CustomTemplate: StoryFn = () => {
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const maxDisplayed = 3;
+
+  return (
+    <div>
+    <MultiSelect value={selectedValues} onChange={setSelectedValues} disabled={false}>
+      <MultiSelectTrigger placeholder={"Selectionnez une ou plusieurs valeurs"} className="w-[400px] bg-blue-50 hover:bg-blue-100 active:bg-blue-100">
+        {selectedValues.slice(0, maxDisplayed).map((val) => {
+          const option = options.find((o) => o.value === val);
+          return (
+            <MultiSelectValue
+              key={val}
+              value={val}
+              onRemove={() => setSelectedValues(selectedValues.filter((v) => v !== val))}
+              className="bg-green-500"
+            >
+              {option?.icon && <option.icon className="mr-1 h-4 w-4" />}
+              {option?.label}
+            </MultiSelectValue>
+          );
+        })}
+        {selectedValues.length > maxDisplayed && (
+          <MultiSelectValue
+            className="bg-green-100 text-black"
+            onRemove={() => setSelectedValues(selectedValues.slice(0, maxDisplayed))}
+          >
+            +{selectedValues.length - maxDisplayed} more
+          </MultiSelectValue>
+        )}
+      </MultiSelectTrigger>
+      <MultiSelectContent className="w-[400px]" classNameCommand="bg-green-50" >
+          <MultiSelecSearchInput placeholder="Rechercher" />
+          <MultiSelectOptions className="bg-yellow-50">
+            <MultiSelectEmpty className="py-6 text-center text-sm bg-neutral-100">Pas de résultat</MultiSelectEmpty>
+            <MultiSelectGroup heading="Options">
+              <MultiSelectAllItems className="bg-yellow-50" >Tout sélectionner</MultiSelectAllItems>
+              {options.map((opt) => (
+                <MultiSelectItem key={opt.value} value={opt.value} 
+                  className="data-[selected=true]:bg-gray-50 data-[selected=true]:font-semibold rounded-r-md"
+                  checkBoxClassName="data-[state=checked]:bg-green-500 data-[state=checked]:text-primary-foreground">
+                  {opt.icon && <opt.icon className="mr-1 h-4 w-4" />}
+                  {opt.label}
+                </MultiSelectItem>
+              ))}
+              </MultiSelectGroup>
+          <MultiSelectSeparator />
+          <MultiSelectGroup heading="Disabled Options">
+                <MultiSelectItem key={'disabled'} value={'disabled'} className="test" disabled>
+                {'disabled'}
+                </MultiSelectItem>
+            </MultiSelectGroup>
+        </MultiSelectOptions>
+        <div className="flex items-center justify-between">
+          { selectedValues.length > 0 && (
+            <MultiSelectClear className="bg-red-200 data-[selected=true]:bg-red-500 data-[selected=true]:text-red-100 text-red-800" >Réinitialiser</MultiSelectClear>
+          )}
+          <MultiSelectClose className="bg-blue-200 data-[selected=true]:bg-blue-500 data-[selected=true]:text-blue-100 text-blue-800">Fermer</MultiSelectClose>
+        </div>
+      </MultiSelectContent>
+    </MultiSelect>
+    Values: 
+    <ul className="list-disc list-inside">
+      {selectedValues.map(v => <li key={v}>{v}</li>)}
+    </ul>
+  </div>
+  );
+};
+
+export const FullCustomisation = CustomTemplate.bind({});
+CustomLabels.args = {
   defaultValue: ["settings", "logout"],
 };

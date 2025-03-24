@@ -118,7 +118,7 @@ MultiSelectTrigger.displayName = "MultiSelectTrigger";
 interface MultiSelectValueProps extends React.HTMLAttributes<HTMLDivElement>  {
   children: React.ReactNode;
   onRemove?: () => void;
-  value: string;
+  value?: string;
 }
 
 const MultiSelectValue = ({ children, onRemove, value, className, ...props }: MultiSelectValueProps) => {
@@ -155,16 +155,17 @@ MultiSelectValue.displayName = "MultiSelectValue";
 /* -------------------- Content -------------------- */
 interface MultiSelectContentProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
+  classNameCommand?: string;
 }
 
-const MultiSelectContent = ({ className, children, ...props }: MultiSelectContentProps) => {
+const MultiSelectContent = ({ className, classNameCommand, children, ...props }: MultiSelectContentProps) => {
   return (
     <PopoverContent
       align="start"
       className={cn("w-[280px] p-0", className)}
       {...props}
     >
-      <Command className="p-2">
+      <Command className={cn("p-2", classNameCommand)}>
           {children}
       </Command>
     </PopoverContent>
@@ -174,12 +175,9 @@ MultiSelectContent.displayName = "MultiSelectContent";
 
 const MultiSelectOptions = ({ className, children }: {className?: string; children: React.ReactNode}) => {
   return (
-    <CommandList
-      className={cn(className)}
-    >
-      {/* <CommandInput placeholder={placeholder || "Search..."} className={cn(showSearchInput && "block")}/> */}
-          {children}
-      </CommandList>
+    <CommandList className={cn(className)}>
+      {children}
+    </CommandList>
   );
 };
 MultiSelectOptions.displayName = "MultiSelectOptions";
@@ -197,13 +195,13 @@ const MultiSelectEmpty = ({ children, ...props }: React.ComponentPropsWithoutRef
 MultiSelectEmpty.displayName = "MultiSelectEmpty";
 
 /* -------------------- Item -------------------- */
-interface MultiSelectItemProps extends React.ComponentPropsWithoutRef<typeof CommandItem> {
+interface MultiSelectItemProps extends Omit<React.ComponentPropsWithoutRef<typeof CommandItem>, "value"> {
   value: string;
-  children: React.ReactNode;
-  disabled?: boolean;
+  className?: string;
+  checkBoxClassName?: string;
 }
 
-const MultiSelectItem = ({ value, children, disabled, className, ...props }: MultiSelectItemProps) => {
+const MultiSelectItem = ({ value, children, disabled, className, checkBoxClassName, ...props }: MultiSelectItemProps) => {
   const { value: selectedValues, toggleValue, registerValue } = useMultiSelectContext();
   const isSelected = selectedValues.includes(value);
 
@@ -218,7 +216,7 @@ const MultiSelectItem = ({ value, children, disabled, className, ...props }: Mul
       disabled={disabled}
       {...props}
     >
-      <Checkbox checked={isSelected} className="mr-2" />
+      <Checkbox checked={isSelected} className={cn("mr-2", checkBoxClassName)} />
       {children}
     </CommandItem>
   );
@@ -232,10 +230,17 @@ const MultiSelectGroup = ({ children, ...props }: React.ComponentPropsWithoutRef
 MultiSelectGroup.displayName = "MultiSelectGroup";
 
 /* -------------------- Select All -------------------- */
+interface MultiSelectAllItemProps extends Omit<React.ComponentPropsWithoutRef<typeof CommandItem>, "value"> {
+  onClick?: () => void;
+  className?: string;
+  checkBoxClassName?: string;
+}
 const MultiSelectAllItems = ({
   children,
   onClick,
-}: { children: React.ReactNode; onClick?: () => void }) => {
+  className,
+  checkBoxClassName,
+}: MultiSelectAllItemProps) => {
   const { value, setValue, allValues } = useMultiSelectContext();
   const allSelected = value.length === allValues.size;
 
@@ -252,8 +257,8 @@ const MultiSelectAllItems = ({
   };
 
   return (
-    <CommandItem onSelect={handleToggleAll} className="cursor-pointer">
-      <Checkbox checked={allSelected} className="mr-2" />
+    <CommandItem onSelect={handleToggleAll} className={cn("cursor-pointer", className)}>
+      <Checkbox checked={allSelected} className={cn("mr-2", checkBoxClassName)} />
       {children}
     </CommandItem>
   );
@@ -262,7 +267,8 @@ MultiSelectAllItems.displayName = "MultiSelectAllItems";
 
 interface MultiSelectCommandButton extends React.ComponentPropsWithoutRef<typeof CommandItem> {
   onClick?: () => void;
-  children: React.ReactNode,
+  className?: string;
+  children?: React.ReactNode;
 }
 
 /* -------------------- Clear -------------------- */
