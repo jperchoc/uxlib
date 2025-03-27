@@ -11,34 +11,26 @@ const meta: Meta<typeof Code> = {
   argTypes: {
     lang: {
       control: "select",
-      options: [
-        "bash", "c", "clojure", "cpp", "csharp", "css", "dart", "diff", "dockerfile",
-        "elixir", "elm", "go", "graphql", "groovy", "handlebars", "haskell", "html",
-        "ini", "java", "javascript", "json", "julia", "kotlin", "latex", "less",
-        "lisp", "lua", "makefile", "markdown", "matlab", "nginx", "objective-c",
-        "pascal", "perl", "php", "powershell", "python", "r", "ruby", "rust", "sass",
-        "scala", "scss", "shell", "sql", "swift", "toml", "tsx", "typescript",
-        "vb", "vue", "wasm", "xml", "yaml"
+      options: ['javascript',
+        'typescript',
+        'jsx',
+        'tsx',
+        'bash',
+        'python',
+        'docker',
+        'dockerfile',
+        'yaml',
+        'cmd',
+        'xml',
+        'html',
+        'json',
+        'css',
+        'scss'
       ] satisfies BundledLanguage[],
     },
     theme: {
       control: "select",
-      options: [
-        "andromeeda", "aurora-x", "ayu-dark", "catppuccin-frappe", "catppuccin-latte",
-        "catppuccin-macchiato", "catppuccin-mocha", "dark-plus", "dracula",
-        "dracula-soft", "everforest-dark", "everforest-light", "github-dark",
-        "github-dark-default", "github-dark-dimmed", "github-dark-high-contrast",
-        "github-light", "github-light-default", "github-light-high-contrast",
-        "gruvbox-dark-hard", "gruvbox-dark-medium", "gruvbox-dark-soft",
-        "gruvbox-light-hard", "gruvbox-light-medium", "gruvbox-light-soft", "houston",
-        "kanagawa-dragon", "kanagawa-lotus", "kanagawa-wave", "laserwave", "light-plus",
-        "material-theme", "material-theme-darker", "material-theme-lighter",
-        "material-theme-ocean", "material-theme-palenight", "min-dark", "min-light",
-        "monokai", "night-owl", "nord", "one-dark-pro", "one-light", "plastic",
-        "poimandres", "red", "rose-pine", "rose-pine-dawn", "rose-pine-moon",
-        "slack-dark", "slack-ochin", "snazzy-light", "solarized-dark", "solarized-light",
-        "synthwave-84", "tokyo-night", "vesper", "vitesse-black", "vitesse-dark", "vitesse-light"
-      ] satisfies BundledTheme[],
+      options: ["github-dark", "github-light"] satisfies BundledTheme[],
     },
     lineNumbers: { control: "boolean" },
   },
@@ -49,6 +41,11 @@ type Story = StoryObj<typeof Code>;
 
 // Default story
 export const Default: Story = {
+  render: (args) => (
+    <div className=" mt-10">
+      <Code {...args} />
+    </div>
+  ),
   args: {
     label: <>code.tsx <span className='text-neutral-400'>(typescript)</span></>,
     code: `import { cn } from "@/lib/utils";
@@ -147,21 +144,21 @@ export const Code: React.FC<CodeProps> = ({
 };
 `,
     lang: "javascript",
-    theme: "dracula",
+    theme: "github-dark",
     lineNumbers: true,
     className: "text-xs [&>pre]:max-h-64",
-    onCopied: (v) => { alert("copied"); console.log(v)}
+    onCopied: (v) => { alert("copied"); console.log(v) }
   },
 };
 
 // Multiple themes
 export const Themes: Story = {
   render: (args) => (
-    <div className="space-y-6">
-      {["dracula", "github-dark", "nord", "monokai"].map((theme) => (
+    <div className="space-y-6 mt-10">
+      {["github-dark", "github-light"].map((theme) => (
         <div key={theme}>
           <h4 className="font-semibold mb-2">{theme}</h4>
-          <Code {...args} theme={theme as BundledTheme} />
+          <Code {...args} theme={theme as ("github-dark" | "github-light")} />
         </div>
       ))}
     </div>
@@ -178,7 +175,7 @@ export const NoLineNumbers: Story = {
   args: {
     code: `console.log("no lines");`,
     lang: "javascript",
-    theme: "dracula",
+    theme: "github-dark",
     lineNumbers: false,
   },
 };
