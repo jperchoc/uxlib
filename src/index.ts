@@ -57,7 +57,8 @@ export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./comp
 export { TimePicker } from "./components/ui/time-picker";
 export type { TimePickerInputProps } from "./components/ui/time-picker-input";
 export { TimePickerInput } from "./components/ui/time-picker-input";
-// export type { MultiSelectProps} from "./components/ui/multi-select";
+// export type { CodeProps } from "./components/ui/code";
+export { Code } from "./components/ui/code";
 export { MultiSelecSearchInput, MultiSelect, MultiSelectAllItems, MultiSelectClear, MultiSelectClose, MultiSelectContent, MultiSelectEmpty, MultiSelectGroup, MultiSelectItem, MultiSelectOptions, MultiSelectSeparator, MultiSelectTrigger, MultiSelectValue } from "./components/ui/multi-select";
 // hooks
 export { useIsMobile } from './hooks/use-mobile';

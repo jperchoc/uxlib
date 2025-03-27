@@ -1,6 +1,6 @@
 {
   "name": "@datatr-ux/uxlib",
-  "version": "0.0.10-beta-4",
+  "version": "0.0.10-beta-5",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
@@ -8,7 +8,9 @@
   "files": [
     "dist"
   ],
-  "sideEffects": ["./dist/style.css"],
+  "sideEffects": [
+    "./dist/style.css"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -67,6 +69,7 @@
     "next-themes": "^0.4.4",
     "react-day-picker": "^8.10.1",
     "react-resizable-panels": "^2.1.7",
+    "shiki": "^3.2.1",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
