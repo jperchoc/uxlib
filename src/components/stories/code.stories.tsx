@@ -1,181 +1,102 @@
-import React from 'react';
 import type { Meta, StoryObj } from "@storybook/react";
-import { Code } from "../ui/code";
-import type { BundledLanguage, BundledTheme } from "shiki";
+import { Code, javascript, python, html, githubLight } from "../ui/code";
 
-// Default export
+const exampleCode = `function hello(name) {
+  console.log('Hello, ' + name);
+}`;
+
+const longCode = `function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log(fibonacci(10));
+`;
+
 const meta: Meta<typeof Code> = {
-  title: "Components/Code",
   component: Code,
-  tags: ["autodocs"],
-  argTypes: {
-    lang: {
-      control: "select",
-      options: ['javascript',
-        'typescript',
-        'jsx',
-        'tsx',
-        'bash',
-        'python',
-        'docker',
-        'dockerfile',
-        'yaml',
-        'cmd',
-        'xml',
-        'html',
-        'json',
-        'css',
-        'scss'
-      ] satisfies BundledLanguage[],
-    },
-    theme: {
-      control: "select",
-      options: ["github-dark", "github-light"] satisfies BundledTheme[],
-    },
-    lineNumbers: { control: "boolean" },
+  title: "Components/Code",
+  parameters: {
+    layout: "padded",
   },
+  tags: ["autodocs"],
 };
 
 export default meta;
 type Story = StoryObj<typeof Code>;
 
-// Default story
 export const Default: Story = {
-  render: (args) => (
-    <div className=" mt-10">
-      <Code {...args} />
-    </div>
-  ),
   args: {
-    label: <>code.tsx <span className='text-neutral-400'>(typescript)</span></>,
-    code: `import { cn } from "@/lib/utils";
-import React, { ReactNode, useEffect, useState } from "react";
-import type { BundledLanguage, BundledTheme } from "shiki";
-import { codeToHtml } from "shiki";
-import './code.css'
-import { Copy } from "lucide-react";
-import { Button } from "./button";
-
-type CodeProps = {
-  code: string;
-  lang?: BundledLanguage;
-  theme?: BundledTheme;
-  lineNumbers?: boolean;
-  className?: string;
-  showCopyButton?: boolean;
-  label?: ReactNode
-  topbarClassName?: string;
-  buttonClassName?: string;
-  onCopied?: (value: string) => void;
-};
-
-export const Code: React.FC<CodeProps> = ({
-  code,
-  lang = "javascript",
-  theme = "dracula",
-  lineNumbers = false,
-  label,
-  showCopyButton = true,
-  onCopied,
-  topbarClassName,
-  buttonClassName,
-  className,
-}) => {
-  const [highlighted, setHighlighted] = useState<string>("");
-
-  useEffect(() => {
-    async function highlight() {
-      const html = await codeToHtml(code, {
-        lang,
-        theme,
-      });
-      setHighlighted(html);
-    }
-
-    highlight();
-  }, [code, lang, theme]);
-
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(code);
-    if (onCopied) {
-      onCopied(code);
-    }
-  };
-
-  const showTopbar = label || showCopyButton;
-
-  return (
-    <div className="relative mt-10">
-      {showTopbar && <div className={cn(
-        "absolute top-0 left-0 ",
-        "flex justify-between items-center",
-        "w-full p-2 py-2 z-10",
-        "rounded-t-sm",
-        "",
-        "bg-neutral-700 text-neutral-200", topbarClassName)}>
-        <span className="font-semibold text-sm">{label}</span>
-        { showCopyButton && (<Button 
-          size={"xs"}
-          variant={"neutral"}
-          className={cn("p-1 rounded-md bg-neutral-700 hover:bg-neutral-800", buttonClassName)}
-          onClick={copyToClipboard}
-          title="Copy code"
-        >
-          <Copy className="size-3" />
-        </Button>)
-      }
-      </div>
-      }
-      <div
-        data-theme={theme}
-        className={cn(
-          'shiki',
-          'rounded-b-sm',
-          "[&>pre]:rounded-b-sm",
-          "[&>pre]:overflow-x-auto",
-          showTopbar && 'pt-9',
-          lineNumbers && "showLines",
-          className,
-        )}
-        dangerouslySetInnerHTML={{ __html: highlighted }}
-      />
-  </div>
-  );
-};
-`,
-    lang: "javascript",
-    theme: "github-dark",
-    lineNumbers: true,
-    className: "text-xs [&>pre]:max-h-64",
-    onCopied: (v) => { alert("copied"); console.log(v) }
+    code: exampleCode,
+    lang: javascript,
   },
 };
 
-// Multiple themes
-export const Themes: Story = {
-  render: (args) => (
-    <div className="space-y-6 mt-10">
-      {["github-dark", "github-light"].map((theme) => (
-        <div key={theme}>
-          <h4 className="font-semibold mb-2">{theme}</h4>
-          <Code {...args} theme={theme as ("github-dark" | "github-light")} />
-        </div>
-      ))}
-    </div>
-  ),
+export const WithLabel: Story = {
   args: {
-    code: `console.log("theme test");`,
-    lang: "javascript",
-    lineNumbers: true,
+    code: exampleCode,
+    lang: javascript,
+    label: "JavaScript Example",
   },
 };
 
-// Without line numbers
-export const NoLineNumbers: Story = {
+export const WithCopyButton: Story = {
   args: {
-    code: `console.log("no lines");`,
-    lang: "javascript",
-    theme: "github-dark",
-    lineNumbers: false,
+    code: exampleCode,
+    lang: javascript,
+    label: "Copy Me!",
+    showCopyButton: true,
+  },
+};
+
+export const WithLineNumbers: Story = {
+  args: {
+    code: longCode,
+    lang: javascript,
+    lineNumbers: true,
+    label: "With Line Numbers",
+  },
+};
+
+export const LightTheme: Story = {
+  args: {
+    code: exampleCode,
+    lang: javascript,
+    theme: githubLight,
+    label: "Light Theme",
+  },
+};
+
+export const PythonExample: Story = {
+  args: {
+    code: `def greet(name):\n    print(f"Hello, {name}")`,
+    lang: python,
+    label: "Python Example",
+  },
+};
+
+export const HTMLExample: Story = {
+  args: {
+    code: `<div class="container">\n  <p>Hello world!</p>\n</div>`,
+    lang: html,
+    label: "HTML Example",
+  },
+};
+
+export const WrappedCode: Story = {
+  args: {
+    code: `const reallyLongVariableName = 'this is a very long string that should wrap if wrapping is enabled: Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, facilis porro soluta vitae ullam tempore veritatis reprehenderit dolor voluptas omnis ab eius libero eaque quaerat earum quibusdam harum illum repellat esse tenetur temporibus obcaecati suscipit. Aliquam laborum consequatur ducimus voluptas odio! Perspiciatis velit officia sint magni voluptatum culpa, et quos vitae non sunt vel, aspernatur fugit quo necessitatibus dolores molestias deleniti cupiditate blanditiis in quaerat voluptates? Sunt nulla cumque vel ullam porro non laboriosam perspiciatis eligendi mollitia veritatis enim voluptatum explicabo harum corrupti cum odit veniam dolorem distinctio, earum esse iusto officia. Laboriosam, inventore qui quia ducimus provident quam hic sint accusamus debitis nulla temporibus, saepe sequi minus officia aperiam impedit assumenda? In, fugit possimus. Esse necessitatibus a eum explicabo.';`,
+    lang: javascript,
+    wrap: true,
+    label: "Wrapped Code",
+  },
+};
+
+export const NoWrap: Story = {
+  args: {
+    code: `const reallyLongVariableName = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis animi nisi repudiandae ex doloribus blanditiis sit dolorum neque dolores, architecto, dolorem eos explicabo vel amet commodi quisquam maiores provident! Eaque, vel dolore aliquid architecto, maxime eum sit asperiores delectus, rerum ratione cupiditate illum natus harum laudantium blanditiis consequatur laboriosam quis. Commodi quisquam fugiat sapiente molestias, atque reprehenderit laboriosam corporis! Porro, molestiae. Veritatis dolore placeat tempora, voluptatibus excepturi quis dolorem neque blanditiis nam facere optio sed deserunt aspernatur, ipsa officiis? Libero eum illum, sint asperiores laudantium voluptatum, excepturi fugit nihil reprehenderit modi molestiae rem quisquam facere, ab et blanditiis? Eius libero itaque facilis ratione! Aspernatur ut id possimus impedit, necessitatibus accusantium cumque nulla explicabo totam beatae, corporis optio pariatur nostrum facere.`,
+    lang: javascript,
+    wrap: false,
+    label: "No Wrap",
   },
 };

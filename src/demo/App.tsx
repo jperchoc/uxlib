@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge, Button } from ".."
-import { Code } from '../components/ui/code';
+import { Code, githubDark, javascript } from '../components/ui/code';
 
 function App() {
 
@@ -56,9 +56,9 @@ export { CodeBlock };
       <Code 
         code={code} 
         lineNumbers 
-        lang='ts' 
-        theme='dark-plus'
-        className='max-h-[15rem] overflow-scroll text-sm' 
+        lang={javascript} 
+        theme={githubDark}
+        className='text-sm [&>pre]:max-h-40'
       />
     </>
   )

@@ -1,38 +1,66 @@
+/* eslint-disable react-refresh/only-export-components */
 import { cn } from "@/lib/utils";
 import { ReactNode, useEffect, useState } from "react";
-import type { LanguageInput } from "shiki";
+import type { LanguageRegistration, ThemeRegistration } from "shiki";
 import "./code.css";
 import { Copy } from "lucide-react";
 import { Button } from "./button";
 import { createHighlighterCore } from "shiki/core";
 import { createOnigurumaEngine } from "shiki/engine/oniguruma";
-import githubDark from "@shikijs/themes/github-dark";
-import githubLight from "@shikijs/themes/github-light";
+import wasm from 'shiki/wasm';
+// themes
+import githubDarkTheme from "@shikijs/themes/github-dark";
+import githubLightTheme from "@shikijs/themes/github-light";
+// languages
+import javascriptArr from "@shikijs/langs/javascript";
+import typescriptArr from "@shikijs/langs/typescript";
+import jsxArr from "@shikijs/langs/jsx";
+import tsxArr from "@shikijs/langs/tsx";
+import bashArr from "@shikijs/langs/bash";
+import pythonArr from "@shikijs/langs/python";
+import dockerArr from "@shikijs/langs/docker";
+import dockerfileArr from "@shikijs/langs/dockerfile";
+import yamlArr from "@shikijs/langs/yaml";
+import cmdArr from "@shikijs/langs/cmd";
+import xmlArr from "@shikijs/langs/xml";
+import htmlArr from "@shikijs/langs/html";
+import jsonArr from "@shikijs/langs/json";
+import cssArr from "@shikijs/langs/css";
+import scssArr from "@shikijs/langs/scss";
+import javaArr from "@shikijs/langs/java";
+import goArr from "@shikijs/langs/go";
 
-type Languages = 'javascript' |
-  'typescript' |
-  'jsx' |
-  'tsx' |
-  'bash' |
-  'python' |
-  'docker' |
-  'dockerfile' |
-  'yaml' |
-  'cmd' |
-  'xml' |
-  'html' |
-  'json' |
-  'css' |
-  'scss';
+export const javascript = javascriptArr[0];
+export const typescript = typescriptArr[0];
+export const jsx = jsxArr[0];
+export const tsx = tsxArr[0];
+export const bash = bashArr[0];
+export const python = pythonArr[0];
+export const docker = dockerArr[0];
+export const dockerfile = dockerfileArr[0];
+export const yaml = yamlArr[0];
+export const cmd = cmdArr[0];
+export const xml = xmlArr[0];
+export const html = htmlArr[0];
+export const json = jsonArr[0];
+export const css = cssArr[0];
+export const scss = scssArr[0];
+export const java = javaArr[0];
+export const go = goArr[0];
+
+export const githubDark = githubDarkTheme;
+export const githubLight = githubLightTheme;
 
 interface CodeProps {
   code: string;
-  lang?: Languages;
-  theme?: "github-dark" | "github-light";
+  lang?: LanguageRegistration;
+  theme?: ThemeRegistration;
   lineNumbers?: boolean;
+  wrap?: boolean;
   className?: string;
   showCopyButton?: boolean;
   label?: ReactNode;
+  containerClassName?: string;
   topbarClassName?: string;
   buttonClassName?: string;
   onCopied?: (value: string) => void;
@@ -40,12 +68,14 @@ interface CodeProps {
 
 const Code = ({
   code,
-  lang = "javascript",
-  theme = "github-dark",
+  wrap = true,
+  lang,
+  theme = githubDark,
   lineNumbers = false,
   label,
   showCopyButton = true,
   onCopied,
+  containerClassName,
   topbarClassName,
   buttonClassName,
   className,
@@ -54,38 +84,16 @@ const Code = ({
 
   useEffect(() => {
     async function highlight() {
-      const themeObj = theme === "github-light" ? githubLight : githubDark;
-
-      const langImportMap = {
-        javascript: () => import("@shikijs/langs/javascript"),
-        typescript: () => import("@shikijs/langs/typescript"),
-        jsx: () => import("@shikijs/langs/jsx"),
-        tsx: () => import("@shikijs/langs/tsx"),
-        bash: () => import("@shikijs/langs/bash"),
-        python: () => import("@shikijs/langs/python"),
-        docker: () => import("@shikijs/langs/docker"),
-        dockerfile: () => import("@shikijs/langs/dockerfile"),
-        yaml: () => import("@shikijs/langs/yaml"),
-        cmd: () => import("@shikijs/langs/cmd"),
-        xml: () => import("@shikijs/langs/xml"),
-        html: () => import("@shikijs/langs/html"),
-        json: () => import("@shikijs/langs/json"),
-        css: () => import("@shikijs/langs/css"),
-        scss: () => import("@shikijs/langs/scss"),
-      } as Record<Languages, () => Promise<LanguageInput>>;
-
-      const loadLang = langImportMap[lang] || langImportMap["javascript"];
-      const langDef = await loadLang();
-
       const highlighter = await createHighlighterCore({
-        themes: [themeObj],
-        langs: [langDef],
-        engine: createOnigurumaEngine(import('shiki/wasm'))
+        themes: [theme],
+        langs: lang ? [lang] : [],
+        engine: createOnigurumaEngine(wasm)
       });
 
+
       const html = highlighter.codeToHtml(code, {
-        lang,
-        theme: themeObj,
+        lang: lang?.name || '',
+        theme: theme,
       });
 
       setHighlighted(html);
@@ -102,7 +110,7 @@ const Code = ({
   const showTopbar = label || showCopyButton;
 
   return (
-    <div className="relative border border-neutral-700  rounded-sm">
+    <div className={cn("relative border border-border rounded-sm", containerClassName)}>
       {showTopbar && (
         <div
           className={cn(
@@ -140,6 +148,7 @@ const Code = ({
           "[&>pre]:overflow-x-auto",
           "[&>pre]:p-2",
           "overflow-auto",
+          wrap && '[&>pre]:whitespace-pre-wrap [&>pre]:break-all',
           showTopbar && "pt-9",
           lineNumbers && "showLines",
           className
@@ -152,4 +161,6 @@ const Code = ({
 
 Code.displayName = "Code";
 
-export { Code };
+export {
+  Code
+};
