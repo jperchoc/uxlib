@@ -25,13 +25,100 @@
 To use this library in your project, install it via npm:
 
 ```bash
-npm install @datatr-ux/uxlib
+npm install @datatr-ux/ods-tailwind-config @datatr-ux/uxlib
 ```
 
 Or with Yarn:
 
 ```bash
-yarn add @datatr-ux/uxlib
+yarn add @datatr-ux/ods-tailwind-config @datatr-ux/uxlib
+```
+
+Add the odsPlugin to your tailwind.config.mjs file:
+
+```js
+import odsPlugin from '@datatr-ux/ods-tailwind-config';
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    '../../../../node_modules/@datatr-ux/uxlib/dist/index.js',
+  ],
+  theme: {
+    extend: { // Extend the theme if you need
+      colors: {
+        // Override colors for ODS17 theme
+        'primary-50': '#f5feff',
+        heading: '#4d5693',
+      },
+      borderRadius: {
+        // Override radiuses for ODS17 theme
+        sm: '0.25rem',
+        DEFAULT: '0.25rem',
+        md: '0.5rem',
+        lg: '0.5rem',
+      },
+    },
+  },
+  plugins: [odsPlugin],
+};
+```
+
+Add the imports in your global css file:
+
+```css
+@import '@datatr-ux/ods-tailwind-config/style.css';
+@import '@datatr-ux/uxlib/style.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+* Override headers colors and heights
+* to match ODS17
+*/
+h1, h2, h3, h4, h5 {
+  @apply text-heading;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2.25rem;
+  line-height: 2.8125rem;
+}
+h3 {
+  font-size: 2rem;
+}
+h4 {
+  line-height: 1.75rem;
+}
+h5 {
+  font-size: 1rem;
+}
+```
+
+And import your css file in you main.tsx file:
+
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+  ShellProvider,
+  initShellContext,
+} from '@ovh-ux/manager-react-shell-client';
+import './global.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <ShellProvider client={context}>
+        <LoadingIndicatorProvider>
+          <App />
+        </LoadingIndicatorProvider>
+      </ShellProvider>
+    </React.StrictMode>,
+  );
 ```
 
 ## Usage
