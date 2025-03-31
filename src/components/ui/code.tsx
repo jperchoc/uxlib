@@ -29,6 +29,7 @@ import cssArr from "@shikijs/langs/css";
 import scssArr from "@shikijs/langs/scss";
 import javaArr from "@shikijs/langs/java";
 import goArr from "@shikijs/langs/go";
+import logArr from "@shikijs/langs/log";
 
 export const javascript = javascriptArr[0];
 export const typescript = typescriptArr[0];
@@ -47,6 +48,7 @@ export const css = cssArr[0];
 export const scss = scssArr[0];
 export const java = javaArr[0];
 export const go = goArr[0];
+export const log = logArr[0];
 
 export const githubDark = githubDarkTheme;
 export const githubLight = githubLightTheme;
