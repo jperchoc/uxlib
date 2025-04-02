@@ -2,27 +2,34 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import "../styles/odsBadge.modules.scss";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-md border border-transparent px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "ods-badge",
   {
     variants: {
       variant: {
-        neutral: "bg-neutral-100 text-neutral-700 hover:bg-neutral-100/80",
-        primary: "bg-primary text-primary-foreground hover:bg-primary/80",
-        info: "bg-primary-100 text-primary-900 hover:bg-primary-100/80",
-        success: "bg-success-100 text-success-900 hover:bg-success-100/80",
-        warning: "bg-warning-100 text-warning-900 hover:bg-warning-100/80",
-        destructive: "bg-critical-100 text-critical-900 hover:bg-critical-100/80",
-        alpha: "bg-alpha text-primary-700 hover:bg-alpha/80",
-        beta: "bg-beta text-primary-900 hover:bg-beta/80",
-        new: "bg-new text-primary-900 hover:bg-new/80",
-        promotion: "bg-promotion text-white hover:bg-promotion-100/80",
+        neutral: "ods-badge--neutral",
+        primary: "bg-primary-500 !text-white",
+        info: "ods-badge--information",
+        success: "ods-badge--success",
+        warning: "ods-badge--warning",
+        destructive: "ods-badge--critical",
+        alpha: "ods-badge--alpha",
+        beta: "ods-badge--beta",
+        new: "ods-badge--new",
+        promotion: "ods-badge--promotion",
         outline: "text-foreground border-border"
       },
+      size: {
+        sm: "ods-badge--sm",
+        md: "ods-badge--md",
+        lg: "ods-badge--lg",
+      }
     },
     defaultVariants: {
-      variant: "neutral",
+      variant: "primary",
+      size: "md",
     },
   }
 )
@@ -31,10 +38,10 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
   VariantProps<typeof badgeVariants> { }
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({ className, variant, size,  ...props }: BadgeProps) {
   return (
     <div
-      className={cn(badgeVariants({ variant, className }))} {...props} />
+      className={cn(badgeVariants({ variant, size, className }))} {...props} />
   )
 }
 
