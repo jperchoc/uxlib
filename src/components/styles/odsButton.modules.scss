@@ -5,6 +5,10 @@
 
   @include button.ods-button();
 
+  /**
+  * This line breaks usage in relative containers (see carousel exemple for example). 
+  * It probably should be removed, but for now we do not modify the ODS scss at all.
+  */
   position: relative;
 
   &--xs {

@@ -1,7 +1,9 @@
+@use './components/styles/index.scss';
 @import '@datatr-ux/ods-tailwind-config/style.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer base {
   :root {

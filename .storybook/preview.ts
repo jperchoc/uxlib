@@ -1,4 +1,4 @@
-import '../src/index.css'
+import '../src/index.scss'
 import type { Preview } from "@storybook/react";
 import { ModeDecorator } from "./modeDecorator";
 

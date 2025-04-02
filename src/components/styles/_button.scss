@@ -1,5 +1,3 @@
-
-@use './index';
 @use './focus';
 @use './state';
 
@@ -221,7 +219,3 @@ $ods-button-size-md: 40px;
     }
   }
 }
-
-// .ods-button {
-//   @include ods-button();
-// }
